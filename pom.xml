@@ -58,7 +58,7 @@
             <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
-              <mainClass>com.example.avanceradjavagroup6slutprojekt/com.example.avanceradjavagroup6slutprojekt.HelloApplication</mainClass>
+              <mainClass>com.example.avanceradjavagroup6slutprojekt/com.example.avanceradjavagroup6slutprojekt.Main</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>
