@@ -94,9 +94,16 @@ public class SearchController {
             searchQuery += parameter + "low-fat";
     }
 
+    // Uses the search query to search recipes
     public void search(){
         searchQuery += "&q=" + searchField.getText().replace(" ", "%20");
         controller.searchRecipes(searchQuery, recipeListView);
         searchQuery = "";
+    }
+
+    // Gets the index value of chosen recipe
+    public void getChosenRecipes() {
+        int index = recipeListView.getSelectionModel().getSelectedIndex();
+        System.out.println(index);
     }
 }

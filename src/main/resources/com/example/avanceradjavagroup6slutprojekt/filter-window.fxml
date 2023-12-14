@@ -41,6 +41,6 @@
         <CheckBox fx:id="isHighFiber" layoutX="181.0" layoutY="52.0" mnemonicParsing="false" text="High fiber" />
         <CheckBox fx:id="isHighProtein" layoutX="265.0" layoutY="52.0" mnemonicParsing="false" text="High protein" />
         <CheckBox fx:id="isLowCarb" layoutX="364.0" layoutY="52.0" mnemonicParsing="false" text="Low carb" />
-        <CheckBox fx:id="isLowFat" layoutX="462.0" layoutY="52.0" mnemonicParsing="false" text="Low fat" />
+        <CheckBox fx:id="isLowFat" layoutX="460.0" layoutY="52.0" mnemonicParsing="false" text="Low fat" />
     </children>
 </AnchorPane>

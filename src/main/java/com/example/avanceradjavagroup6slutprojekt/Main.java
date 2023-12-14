@@ -16,22 +16,6 @@ public class Main extends Application {
         primaryStage.setTitle("Title");
         primaryStage.setScene(scene);
         primaryStage.show();
-
-        // Keans gui
-
-        /*
-        // creates gui
-        GUI gui = new GUI();
-
-        // sets the scene for the primary stage
-        primaryStage.setScene(gui.getScene());
-
-        // title of the window
-        primaryStage.setTitle("Recipe Search");
-
-        // displays the primary stage
-        primaryStage.show();
-        */
     }
 
     public static void main(String[] args) {
