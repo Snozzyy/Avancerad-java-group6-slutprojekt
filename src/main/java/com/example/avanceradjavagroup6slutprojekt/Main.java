@@ -10,7 +10,16 @@ import java.io.IOException;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-window.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        primaryStage.setTitle("Title");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        // Keans gui
+
+        /*
         // creates gui
         GUI gui = new GUI();
 
@@ -22,6 +31,7 @@ public class Main extends Application {
 
         // displays the primary stage
         primaryStage.show();
+        */
     }
 
     public static void main(String[] args) {

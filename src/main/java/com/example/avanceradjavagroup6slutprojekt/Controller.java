@@ -1,9 +1,8 @@
 package com.example.avanceradjavagroup6slutprojekt;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 
-import javafx.scene.control.ListView;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
@@ -25,14 +24,16 @@ public class Controller {
     private static final String API_ID = "f6891638";
     private static final String API_KEY = "2b61efbfbbfbb9a8e99618f31d0ec561";
     private static final String BASE_URL = "https://api.edamam.com/api/recipes/v2";
-    
+    @FXML
+    ListView<String> recipeListView = new ListView<>();
+    @FXML
+    TextField searchField;
+
     //searches for recipes based on what the user types
     public void searchRecipes(String search, ListView<String> recipeListView) {
         new Thread(() -> {
             try {
-                // encodes the search for URL and builds the request URL
-                String encodedSearch = URLEncoder.encode(search, StandardCharsets.UTF_8);
-                BufferedReader in = getBufferedReader(encodedSearch);
+                BufferedReader in = getBufferedReader(search);
                 String inputLine;
                 StringBuilder content = new StringBuilder();
                 while ((inputLine = in.readLine()) != null) {
@@ -50,7 +51,8 @@ public class Controller {
     }
 
     private static BufferedReader getBufferedReader(String encodedSearch) throws IOException {
-        String requestURL = BASE_URL + "?type=public&q=" + encodedSearch + "&app_id=" + API_ID + "&app_key=" + API_KEY;
+        String requestURL = BASE_URL + "?type=public" + encodedSearch + "&app_id=" + API_ID + "&app_key=" + API_KEY;
+        System.out.println(requestURL);
 
         // creates a URL and opens the connection
         URL url = new URL(requestURL);
