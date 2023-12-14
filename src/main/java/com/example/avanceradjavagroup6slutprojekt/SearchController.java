@@ -96,7 +96,7 @@ public class SearchController {
 
     public void search(){
         searchQuery += "&q=" + searchField.getText().replace(" ", "%20");
-        System.out.println(searchQuery);
         controller.searchRecipes(searchQuery, recipeListView);
+        searchQuery = "";
     }
 }
