@@ -1,5 +1,6 @@
 package com.example.avanceradjavagroup6slutprojekt;
 
+import com.eclipsesource.json.JsonArray;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,9 +9,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 public class SearchController {
@@ -67,6 +71,7 @@ public class SearchController {
     // Checks which parameters is chosen and adds it to search query
     private void healthParameters() {
         String parameter = "&health=";
+        // Check if possible to optimize with for-loop
         if (isVegan.isSelected())
             searchQuery += parameter + "vegan";
         if (isVegetarian.isSelected())
@@ -82,6 +87,7 @@ public class SearchController {
     // Checks which parameters is chosen and adds it to search query
     private void dietParameters() {
         String parameter = "&diet=";
+        // Check if possible to optimize with for-loop
         if (isBalanced.isSelected())
             searchQuery += parameter + "balanced";
         if (isHighFiber.isSelected())
@@ -102,8 +108,13 @@ public class SearchController {
     }
 
     // Gets the index value of chosen recipe
-    public void getChosenRecipes() {
-        int index = recipeListView.getSelectionModel().getSelectedIndex();
-        System.out.println(index);
+    public void getChosenRecipes(MouseEvent event) {
+        // Makes sure code is only run on double-click
+        if (event.getButton().equals(MouseButton.PRIMARY))
+            if (event.getClickCount() == 2){
+                // Skriv kod här
+                int index = recipeListView.getSelectionModel().getSelectedIndex();
+                System.out.println(index);
+            }
     }
 }

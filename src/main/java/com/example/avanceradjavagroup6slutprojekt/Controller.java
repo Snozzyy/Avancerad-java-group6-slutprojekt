@@ -1,5 +1,6 @@
 package com.example.avanceradjavagroup6slutprojekt;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -39,7 +40,10 @@ public class Controller {
 
                 // parses the response and updates the GUI
                 List<String> recipes = parseRecipes(content.toString());
-                javafx.application.Platform.runLater(() -> recipeListView.getItems().setAll(recipes));
+                if (recipes != null)
+                    Platform.runLater(() -> recipeListView.getItems().setAll(recipes));
+                else
+                    Platform.runLater(() -> recipeListView.getItems().setAll("No results found"));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -73,12 +77,8 @@ public class Controller {
                 String recipeName = recipe.get("label").asString();
                 recipeList.add(recipeName);
             }
-
             return recipeList;
-        } else {
-            // Show this in GUI instead
-            System.out.println("No results found, change your filter or search something else");
+        } else
             return null;
-        }
     }
 }
