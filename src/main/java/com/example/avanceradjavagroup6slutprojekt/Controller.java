@@ -25,6 +25,7 @@ public class Controller {
     private static final String API_ID = "f6891638";
     private static final String API_KEY = "2b61efbfbbfbb9a8e99618f31d0ec561";
     private static final String BASE_URL = "https://api.edamam.com/api/recipes/v2";
+    private JsonArray hits;
 
     //searches for recipes based on what the user types
     public void searchRecipes(String search, ListView<String> recipeListView) {
@@ -67,7 +68,7 @@ public class Controller {
     private List<String> parseRecipes(String jsonResponse) {
         List<String> recipeList = new ArrayList<>();
         JsonObject jsonObject = Json.parse(jsonResponse).asObject();
-        JsonArray hits = jsonObject.get("hits").asArray();
+        hits = jsonObject.get("hits").asArray();
 
         // Check if API returns any recipes
         if (!hits.isEmpty()) {
@@ -80,5 +81,9 @@ public class Controller {
             return recipeList;
         } else
             return null;
+    }
+
+    public JsonArray getHits() {
+        return hits;
     }
 }
