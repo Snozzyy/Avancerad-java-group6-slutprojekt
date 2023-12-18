@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class SearchController {
-    private static String searchQuery = "";
 
     // Health parameters
     @FXML
@@ -52,14 +51,23 @@ public class SearchController {
     TextArea ingredients;
     @FXML
     TextArea instructions;
+    @FXML
+    Label dishLabel;
+    @FXML
+    TabPane tabPane;
 
     Controller controller = new Controller();
+    private static String searchQuery = "";
     private String[] ingredientsList;
     private String[] instructionsList;
     private Stage stage;
     private Scene scene;
-    private Parent root;
+    String recipeName;
 
+    public SearchController() {
+        instructions = new TextArea("");
+        ingredients = new TextArea("");
+    }
 
     // Opens the filter window
     public void openFilterWindow() throws IOException {
@@ -121,7 +129,7 @@ public class SearchController {
     public void getChosenRecipe() throws IOException {
         // Makes sure code is only run on double-click
         int recipeIndex = recipeListView.getSelectionModel().getSelectedIndex();
-        String recipeName = recipeListView.getSelectionModel().getSelectedItem();
+        recipeName = recipeListView.getSelectionModel().getSelectedItem();
 
         JsonObject selectedRecipe = controller.getHits().get(recipeIndex).asObject().get("recipe").asObject();
         JsonArray ingredientsInformation = selectedRecipe.get("ingredients").asArray();
@@ -137,40 +145,31 @@ public class SearchController {
         instructionsList = new String[instructions.size()];
         for (int i = 0;  i < instructionsList.length; i++)
             instructionsList[i] = instructions.get(i).asString();
-
-        System.out.println(recipeName + "\n" + Arrays.toString(ingredientsList) + "\n" +
-                Arrays.toString(instructionsList));
     }
 
-    // Show the recipe when user double-clicks on a recipe in ListView
-    public void switchToRecipe(MouseEvent event) throws IOException {
+    // If user double-clicks on a recipe, append instructions and ingredients to text area and switch tab to recipe
+    public void showRecipe(MouseEvent event) throws IOException {
         if (event.getButton().equals(MouseButton.PRIMARY))
             if (event.getClickCount() == 2) {
+                // Make sure that the TextAreas are "empty"
                 getChosenRecipe();
-                Parent root = FXMLLoader.load(getClass().getResource("recipe-window.fxml"));
-                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-                showRecipe(ingredientsList, instructionsList);
+                ingredients.setText("");
+                instructions.setText("");
+                dishLabel.setText(recipeName);
+                for (String s : ingredientsList)
+                    ingredients.appendText(s + "\n");
+                for (int i = 0; i < instructionsList.length; i++)
+                    instructions.appendText(String.format("%d: %s\n",i+1, instructionsList[i]));
+                switchTab();
             }
     }
 
-    // Go back to main-window scene
-    public void switchToSearch(ActionEvent e) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("main-window.fxml"));
-        stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public void showRecipe(String[] ingredientsList, String[] instructionsList) {
-        // TODO
-        //  Kolla varför TextArea är null, fixa det!!!!
-        for (String s : ingredientsList)
-            ingredients.appendText(s);
-        for (String s : instructionsList)
-            instructions.appendText(s);
+    // Gets selected tab and switches to unselected tab
+    public void switchTab() {
+        int tabIndex = tabPane.getSelectionModel().getSelectedIndex();
+        if (tabIndex == 0)
+            tabPane.getSelectionModel().select(1);
+        else
+            tabPane.getSelectionModel().select(0);
     }
 }
