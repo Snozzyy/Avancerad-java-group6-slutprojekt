@@ -60,8 +60,8 @@ public class Controller {
         connection.setRequestMethod("GET");
 
         // reads the response
-        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        return in;
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        return bufferedReader;
     }
 
     // parses the response from the api to get the names of recipes
