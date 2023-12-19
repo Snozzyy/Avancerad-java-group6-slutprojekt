@@ -201,12 +201,14 @@ public class SearchController {
             try {
                 // gets the shopping list from Firebase
                 List<String> shoppingList = firebase.getShoppingList();
-                shoppingListArea.clear();
+                shoppingListArea.getItems().clear();
 
                 // adds each item from the shopping list to the TextArea
-                for (String item : shoppingList) {
-                    shoppingListArea.appendText(item + "\n");
+                for (int i = 0; i < shoppingList.size(); i++) {
+                    String item = shoppingList.get(i);
+                    shoppingListArea.getItems().set(i, item + "\n");
                 }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -214,7 +216,7 @@ public class SearchController {
     }
 
     @FXML
-    private TextArea shoppingListArea; // textarea to display the shopping list
+    private ListView<String> shoppingListArea; // textarea to display the shopping list
 
     private Firebase firebase = new Firebase();
 
@@ -223,7 +225,7 @@ public class SearchController {
 
     @FXML
     public void saveShoppingList() {
-        String shoppingListText = shoppingListArea.getText();
+        String shoppingListText = String.valueOf(shoppingListArea.getItems());
 
         // splits the text into individual items
         String[] items = shoppingListText.split("\\r?\\n");
@@ -240,7 +242,7 @@ public class SearchController {
         }
 
         // clears the textarea after saving
-        shoppingListArea.clear();
+        shoppingListArea.getItems().clear();
     }
 
     @FXML
@@ -248,13 +250,13 @@ public class SearchController {
         String item = itemName.getText();
         itemName.clear();
         firebase.addItemToShoppingList(item);
-        shoppingListArea.appendText(item + "\n");
+        shoppingListArea.getItems().add(item);
     }
 
     @FXML
     private void clearShoppingList() {
         // clears the shopping list textarea
-        shoppingListArea.clear();
+        shoppingListArea.getItems().clear();
     }
 
     @FXML
@@ -268,12 +270,14 @@ public class SearchController {
         try {
             // gets the old shopping list from firebase
             List<String> oldShoppingList = firebase.getShoppingList();
-            shoppingListArea.clear();
+            shoppingListArea.getItems().clear();
 
             // displays the old shopping list in the textarea
-            for (String item : oldShoppingList) {
-                shoppingListArea.appendText(item + "\n");
+            for (int i = 0; i < oldShoppingList.size(); i++) {
+                String item = oldShoppingList.get(i);
+                shoppingListArea.getItems().add(item);
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -281,12 +285,11 @@ public class SearchController {
 
     @FXML
     private void deleteSelectedItem() {
-        String selectedText = shoppingListArea.getSelectedText();
+        System.out.println("delete!");
+        String selectedText = shoppingListArea.getSelectionModel().getSelectedItem();
+        System.out.println(selectedText);
 
         if (selectedText != null && !selectedText.isEmpty()) {
-            // removes the selected item from the shopping list in the GUI
-            shoppingListArea.replaceSelection("");
-
             // deletes the selected item from firebase
             try {
                 firebase.deleteItemFromShoppingList(selectedText);

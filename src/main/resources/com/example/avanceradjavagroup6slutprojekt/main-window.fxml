@@ -20,7 +20,6 @@
                         <TextField fx:id="searchField" layoutX="482.0" layoutY="637.0" prefHeight="74.0" prefWidth="237.0" promptText="Search for dishes or ingredients" />
                         <Button layoutX="482.0" layoutY="741.0" mnemonicParsing="false" onAction="#search" text="Search" />
                         <Button layoutX="676.0" layoutY="741.0" mnemonicParsing="false" onAction="#openFilterWindow" text="Filter" />
-                  <Button layoutX="962.0" layoutY="14.0" mnemonicParsing="false" onAction="#openShoppingListWindow" text="Shopping list" />
                     </children></AnchorPane>
             </content>
         </Tab>
@@ -28,24 +27,42 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="739.0" prefWidth="1105.0">
                     <children>
-                        <TextArea fx:id="ingredients" editable="false" layoutX="36.0" layoutY="97.0" prefHeight="632.0" prefWidth="366.0">
+                        <TextArea fx:id="ingredients" editable="false" layoutX="36.0" layoutY="56.0" prefHeight="632.0" prefWidth="366.0">
                             <font>
                                 <Font size="18.0" />
                             </font>
                         </TextArea>
-                        <TextArea fx:id="instructions" editable="false" layoutX="461.0" layoutY="97.0" prefHeight="632.0" prefWidth="701.0" wrapText="true">
+                        <TextArea fx:id="instructions" editable="false" layoutX="461.0" layoutY="56.0" prefHeight="632.0" prefWidth="701.0" wrapText="true">
                             <font>
                                 <Font size="18.0" />
                             </font>
                         </TextArea>
-                  <Label fx:id="dishLabel" layoutX="461.0" layoutY="14.0" prefHeight="70.0" prefWidth="700.0">
+                  <Label fx:id="dishLabel" layoutX="461.0" prefHeight="53.0" prefWidth="754.0">
                      <font>
-                        <Font size="48.0" />
+                        <Font size="36.0" />
                      </font>
                   </Label>
-                  <Button layoutX="36.0" layoutY="37.0" mnemonicParsing="false" onAction="#switchTab" text="Go back" />
+                  <Button layoutX="36.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchTab" text="Go back" />
                     </children></AnchorPane>
             </content>
         </Tab>
+      <Tab text="Shopping list">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="itemName" layoutX="298.0" layoutY="638.0" prefHeight="106.0" prefWidth="608.0" promptText="Write product here">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </TextField>
+                  <Button layoutX="57.0" layoutY="569.0" mnemonicParsing="false" onAction="#readOldShoppingList" prefHeight="39.0" prefWidth="89.0" text="Get list" />
+                  <Button layoutX="177.0" layoutY="569.0" mnemonicParsing="false" onAction="#clearShoppingList" prefHeight="39.0" prefWidth="89.0" text="Clear list" />
+                  <Button layoutX="930.0" layoutY="672.0" mnemonicParsing="false" onAction="#addItemToShoppingList" prefHeight="39.0" prefWidth="89.0" text="Add item" />
+                  <Button layoutX="298.0" layoutY="569.0" mnemonicParsing="false" onAction="#deleteSelectedItem" prefHeight="39.0" prefWidth="89.0" text="Delete list" />
+                  <ListView fx:id="shoppingListArea" layoutX="57.0" layoutY="56.0" prefHeight="497.0" prefWidth="1103.0" />
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
     </tabs>
 </TabPane>
