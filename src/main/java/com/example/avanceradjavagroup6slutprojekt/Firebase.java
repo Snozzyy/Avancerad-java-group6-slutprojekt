@@ -84,4 +84,45 @@ public class Firebase {
 
         return shoppingList;
     }
+
+    // method to get the key of an item by its name from Firebase
+    private String getItemKeyByName(String itemName) throws IOException {
+        URL url = new URL(FIREBASE_DB_URL + "shoppingList.json");
+        HttpURLConnection connection = setupConnection(url, "GET");
+
+        // reads the response and parse the item keys
+        String response = readResponse(connection);
+        JsonObject jsonObject = Json.parse(response).asObject();
+
+        // loops through the JSON object to find the key that matches the item name
+        for (String key : jsonObject.names()) {
+            String item = jsonObject.get(key).asObject().getString("item", null);
+            if (item != null && item.equals(itemName)) {
+                return key;
+            }
+        }
+
+        return null; // if not found
+    }
+
+    public void deleteItemFromShoppingList(String item) throws IOException {
+        String itemKey = getItemKeyByName(item); // gets the key of the item to delete
+
+        if (itemKey != null) {
+            URL url = new URL(FIREBASE_DB_URL + "shoppingList/" + itemKey + ".json");
+            // sets up the HTTP connection for the DELETE request
+            HttpURLConnection connection = setupConnection(url, "DELETE");
+
+            // sends the delete request to firebase
+            connection.connect();
+
+            // checks the response code to see if the item was deleted successfully
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                System.out.println("Item deleted successfully.");
+            } else {
+                System.err.println("Failed to delete item. Response code: " + responseCode);
+            }
+        }
+    }
 }

@@ -278,5 +278,22 @@ public class SearchController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void deleteSelectedItem() {
+        String selectedText = shoppingListArea.getSelectedText();
+
+        if (selectedText != null && !selectedText.isEmpty()) {
+            // removes the selected item from the shopping list in the GUI
+            shoppingListArea.replaceSelection("");
+
+            // deletes the selected item from firebase
+            try {
+                firebase.deleteItemFromShoppingList(selectedText);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
 
