@@ -58,6 +58,8 @@ public class SearchController {
     Label dishLabel;
     @FXML
     TabPane tabPane;
+    @FXML
+    TextField itemName;
 
     Controller controller = new Controller();
     private static String searchQuery = "";
@@ -242,8 +244,11 @@ public class SearchController {
     }
 
     @FXML
-    private void addItemToShoppingList() {
-        // tom - egentligen ganska meningslös - tas bort?
+    private void addItemToShoppingList() throws IOException {
+        String item = itemName.getText();
+        itemName.clear();
+        firebase.addItemToShoppingList(item);
+        shoppingListArea.appendText(item + "\n");
     }
 
     @FXML
