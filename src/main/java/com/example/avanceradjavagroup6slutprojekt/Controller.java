@@ -1,6 +1,7 @@
 package com.example.avanceradjavagroup6slutprojekt;
 
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import com.eclipsesource.json.Json;
@@ -13,6 +14,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +60,8 @@ public class Controller {
         connection.setRequestMethod("GET");
 
         // reads the response
-        return new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        return bufferedReader;
     }
 
     // parses the response from the api to get the names of recipes
