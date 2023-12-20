@@ -155,9 +155,9 @@ public class SearchController {
                 instructions.setText("");
                 dishLabel.setText(recipeName);
                 for (String s : ingredientsList)
-                    ingredients.appendText(s + "\n");
+                    ingredients.appendText(s + "\n\n");
                 for (int i = 0; i < instructionsList.length; i++)
-                    instructions.appendText(String.format("%d: %s\n",i+1, instructionsList[i]));
+                    instructions.appendText(String.format("%d: %s\n\n",i+1, instructionsList[i]));
                 switchTab();
             }
     }
