@@ -285,9 +285,8 @@ public class SearchController {
 
     @FXML
     private void deleteSelectedItem() {
-        System.out.println("delete!");
         String selectedText = shoppingListArea.getSelectionModel().getSelectedItem();
-        System.out.println(selectedText);
+        System.out.println("Selected text: " + selectedText);
 
         if (selectedText != null && !selectedText.isEmpty()) {
             // deletes the selected item from firebase

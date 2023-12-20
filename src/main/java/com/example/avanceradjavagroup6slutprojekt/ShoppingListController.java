@@ -1,3 +1,4 @@
+/*
 package com.example.avanceradjavagroup6slutprojekt;
 
 import javafx.application.Platform;
@@ -15,7 +16,12 @@ import java.util.List;
 
 public class ShoppingListController {
 
+
     public void openShoppingListWindow() {
+
+*/
+/*    public void openShoppingListWindow() {
+
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/avanceradjavagroup6slutprojekt/shopping-list.fxml"));
             VBox root = fxmlLoader.load();
@@ -33,6 +39,12 @@ public class ShoppingListController {
     }
     // updates the shopping list
     private void updateShoppingList() {
+    }*//*
+
+
+    // updates the shopping list
+*/
+/*    private void updateShoppingList() {
         Platform.runLater(() -> {
             try {
                 // gets the shopping list from Firebase
@@ -48,6 +60,8 @@ public class ShoppingListController {
             }
         });
     }
+    }*//*
+
 
     @FXML
     private TextArea shoppingListArea; // textarea to display the shopping list
@@ -58,6 +72,8 @@ public class ShoppingListController {
     TextField textfield; // tom - snackade i discord om den
 
     @FXML
+*/
+/*    @FXML
     public void saveShoppingList() {
         String shoppingListText = shoppingListArea.getText();
 
@@ -123,6 +139,22 @@ public class ShoppingListController {
             // removes the selected item from the shopping list in the GUI
             shoppingListArea.replaceSelection("");
 
+    }*//*
+
+
+    @FXML
+    public void addItemToShoppingList(String item) throws IOException {
+        firebase.addItemToShoppingList(item);
+    }
+
+   public List<String> readOldShoppingList() throws IOException {
+       return firebase.getShoppingList();
+    }
+
+    @FXML
+    public void deleteSelectedItem(String selectedText) {
+        if (selectedText != null && !selectedText.isEmpty()) {
+            // removes the selected item from the shopping list in the GUI
             // deletes the selected item from firebase
             try {
                 firebase.deleteItemFromShoppingList(selectedText);
@@ -133,3 +165,4 @@ public class ShoppingListController {
     }
 
 }
+*/

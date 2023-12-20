@@ -8,7 +8,6 @@ import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -21,12 +20,10 @@ import java.util.List;
 
 // controller class to work with the api
 public class Controller {
-
     private static final String API_ID = "f6891638";
     private static final String API_KEY = "2b61efbfbbfbb9a8e99618f31d0ec561";
     private static final String BASE_URL = "https://api.edamam.com/api/recipes/v2";
     private JsonArray hits;
-
     //searches for recipes based on what the user types
     public void searchRecipes(String search, ListView<String> recipeListView) {
         new Thread(() -> {
@@ -38,7 +35,6 @@ public class Controller {
                     content.append(inputLine);
                 }
                 in.close();
-
                 // parses the response and updates the GUI
                 List<String> recipes = parseRecipes(content.toString());
                 if (recipes != null)
@@ -50,10 +46,8 @@ public class Controller {
             }
         }).start();
     }
-
     private static BufferedReader getBufferedReader(String encodedSearch) throws IOException {
         String requestURL = BASE_URL + "?type=public" + encodedSearch + "&app_id=" + API_ID + "&app_key=" + API_KEY;
-
         // creates a URL and opens the connection
         URL url = new URL(requestURL);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -62,6 +56,7 @@ public class Controller {
         // reads the response
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         return bufferedReader;
+
     }
 
     // parses the response from the api to get the names of recipes
@@ -69,7 +64,6 @@ public class Controller {
         List<String> recipeList = new ArrayList<>();
         JsonObject jsonObject = Json.parse(jsonResponse).asObject();
         hits = jsonObject.get("hits").asArray();
-
         // Check if API returns any recipes
         if (!hits.isEmpty()) {
             // for each loop to go through each element
@@ -82,7 +76,6 @@ public class Controller {
         } else
             return null;
     }
-
     public JsonArray getHits() {
         return hits;
     }
