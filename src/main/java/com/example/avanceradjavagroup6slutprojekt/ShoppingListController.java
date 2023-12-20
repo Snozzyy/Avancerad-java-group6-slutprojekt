@@ -1,4 +1,3 @@
-/*
 package com.example.avanceradjavagroup6slutprojekt;
 
 import javafx.application.Platform;
@@ -16,12 +15,7 @@ import java.util.List;
 
 public class ShoppingListController {
 
-
-    public void openShoppingListWindow() {
-
-*/
 /*    public void openShoppingListWindow() {
-
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/avanceradjavagroup6slutprojekt/shopping-list.fxml"));
             VBox root = fxmlLoader.load();
@@ -36,14 +30,9 @@ public class ShoppingListController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-    // updates the shopping list
-    private void updateShoppingList() {
-    }*//*
-
+    }*/
 
     // updates the shopping list
-*/
 /*    private void updateShoppingList() {
         Platform.runLater(() -> {
             try {
@@ -59,9 +48,7 @@ public class ShoppingListController {
                 e.printStackTrace();
             }
         });
-    }
-    }*//*
-
+    }*/
 
     @FXML
     private TextArea shoppingListArea; // textarea to display the shopping list
@@ -72,8 +59,6 @@ public class ShoppingListController {
     TextField textfield; // tom - snackade i discord om den
 
     @FXML
-*/
-/*    @FXML
     public void saveShoppingList() {
         String shoppingListText = shoppingListArea.getText();
 
@@ -96,59 +81,12 @@ public class ShoppingListController {
     }
 
     @FXML
-    private void addItemToShoppingList() throws IOException {
-        String item = itemName.getText();
-        itemName.clear();
-        firebase.addItemToShoppingList(item);
-        shoppingListArea.appendText(item + "\n");
-    }
-
-    @FXML
-    private void clearShoppingList() {
-        // clears the shopping list textarea
-        shoppingListArea.clear();
-    }
-
-    @FXML
-    private void closeShoppingListWindow() {
-        // closes the shopping list window
-        Stage stage = (Stage) shoppingListArea.getScene().getWindow();
-        stage.close();
-    }
-
-    public void readOldShoppingList(ActionEvent actionEvent) {
-        try {
-            // gets the old shopping list from firebase
-            List<String> oldShoppingList = firebase.getShoppingList();
-            shoppingListArea.clear();
-
-            // displays the old shopping list in the textarea
-            for (String item : oldShoppingList) {
-                shoppingListArea.appendText(item + "\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void deleteSelectedItem() {
-        String selectedText = shoppingListArea.getSelectedText();
-
-        if (selectedText != null && !selectedText.isEmpty()) {
-            // removes the selected item from the shopping list in the GUI
-            shoppingListArea.replaceSelection("");
-
-    }*//*
-
-
-    @FXML
     public void addItemToShoppingList(String item) throws IOException {
         firebase.addItemToShoppingList(item);
     }
 
-   public List<String> readOldShoppingList() throws IOException {
-       return firebase.getShoppingList();
+    public List<String> readOldShoppingList() throws IOException {
+        return firebase.getShoppingList();
     }
 
     @FXML
@@ -165,4 +103,3 @@ public class ShoppingListController {
     }
 
 }
-*/

@@ -13,7 +13,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-window.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        primaryStage.setTitle("Title");
+        primaryStage.setTitle("Recipe Finder");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -23,4 +23,3 @@ public class Main extends Application {
         launch(args);
     }
 }
-

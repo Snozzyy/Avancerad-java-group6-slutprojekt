@@ -1,81 +1,73 @@
 package com.example.avanceradjavagroup6slutprojekt;
 
 import com.eclipsesource.json.JsonArray;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import com.eclipsesource.json.JsonObject;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 public class SearchController {
 
     // Health parameters
     @FXML
-    CheckBox isVegan;
+    private CheckBox isVegan;
     @FXML
-    CheckBox isVegetarian;
+    private CheckBox isVegetarian;
     @FXML
-    CheckBox isDairyFree;
+    private CheckBox isDairyFree;
     @FXML
-    CheckBox isShellfishFree;
+    private CheckBox isShellfishFree;
     @FXML
-    CheckBox isEggFree;
+    private CheckBox isEggFree;
 
     // Diet parameters
     @FXML
-    CheckBox isBalanced;
+    private CheckBox isBalanced;
     @FXML
-    CheckBox isHighFiber;
+    private CheckBox isHighFiber;
     @FXML
-    CheckBox isHighProtein;
+    private CheckBox isHighProtein;
     @FXML
-    CheckBox isLowCarb;
+    private CheckBox isLowCarb;
     @FXML
-    CheckBox isLowFat;
+    private CheckBox isLowFat;
 
     @FXML
-    TextField searchField;
+    private TextField searchField; // field used when searching for recipes
     @FXML
-    ListView<String> recipeListView;
+    private ListView<String> recipeListView; // ListView where recipes are shown
     @FXML
-    TextArea ingredients;
+    private TextArea ingredients;
     @FXML
-    TextArea instructions;
+    private TextArea instructions;
     @FXML
-    Label dishLabel;
+    private Label dishLabel;
     @FXML
-    TabPane tabPane;
+    private TabPane tabPane;
     @FXML
-    TextField itemName;
+    private TextField itemName;
+    @FXML
+    private ListView<String> shoppingListArea; // textarea to display the shopping list
 
     Controller controller = new Controller();
+    ShoppingListController slc = new ShoppingListController();
     private static String searchQuery = "";
     private String[] ingredientsList;
     private String[] instructionsList;
-    private Stage stage;
-    private Scene scene;
-    String recipeName;
+    private String recipeName;
 
-    public SearchController() {
-        instructions = new TextArea("");
-        ingredients = new TextArea("");
-    }
-
-    // Opens the filter window
-    public void openFilterWindow() throws IOException {
+    @FXML
+    private void openFilterWindow() throws IOException {
+        // Opens the filter window
         Stage filter = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("filter-window.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -84,17 +76,17 @@ public class SearchController {
         filter.show();
     }
 
-    // Gets the filter parameters and returns a search query
-    public void submitFilter(ActionEvent e) {
+    @FXML
+    private void submitFilter(ActionEvent e) {
+        // Gets the filter parameters and returns a search query
         healthParameters();
         dietParameters();
         ((Stage) (((Button) e.getSource()).getScene().getWindow())).close();
     }
 
-    // Checks which parameters is chosen and adds it to search query
     private void healthParameters() {
+        // Checks which parameters is chosen and adds it to search query
         String parameter = "&health=";
-        // Check if possible to optimize with for-loop
         if (isVegan.isSelected())
             searchQuery += parameter + "vegan";
         if (isVegetarian.isSelected())
@@ -107,10 +99,9 @@ public class SearchController {
             searchQuery += parameter + "egg-free";
     }
 
-    // Checks which parameters is chosen and adds it to search query
     private void dietParameters() {
+        // Checks which parameters is chosen and adds it to search query
         String parameter = "&diet=";
-        // Check if possible to optimize with for-loop
         if (isBalanced.isSelected())
             searchQuery += parameter + "balanced";
         if (isHighFiber.isSelected())
@@ -123,16 +114,17 @@ public class SearchController {
             searchQuery += parameter + "low-fat";
     }
 
-    // Uses the search query to search recipes
-    public void search() {
+    @FXML
+    private void search() {
+        // Uses the search query to search recipes
         searchQuery += "&q=" + searchField.getText().replace(" ", "%20");
         controller.searchRecipes(searchQuery, recipeListView);
         searchQuery = "";
     }
 
-    // Get name, ingredients and instructions from recipe
-    public void getChosenRecipe() throws IOException {
-        // Makes sure code is only run on double-click
+    @FXML
+    private void getChosenRecipe() {
+        // Get name, ingredients and instructions from recipe
         int recipeIndex = recipeListView.getSelectionModel().getSelectedIndex();
         recipeName = recipeListView.getSelectionModel().getSelectedItem();
 
@@ -152,8 +144,9 @@ public class SearchController {
             instructionsList[i] = instructions.get(i).asString();
     }
 
-    // If user double-clicks on a recipe, append instructions and ingredients to text area and switch tab to recipe
-    public void showRecipe(MouseEvent event) throws IOException {
+    @FXML
+    private void showRecipe(MouseEvent event) {
+        // If user double-clicks on a recipe, append instructions and ingredients to text area and switch tab to recipe
         if (event.getButton().equals(MouseButton.PRIMARY))
             if (event.getClickCount() == 2) {
                 // Make sure that the TextAreas are "empty"
@@ -169,8 +162,9 @@ public class SearchController {
             }
     }
 
-    // Gets selected tab and switches to unselected tab
+    @FXML
     public void switchTab() {
+        // Gets selected tab and switches to unselected tab
         int tabIndex = tabPane.getSelectionModel().getSelectedIndex();
         if (tabIndex == 0)
             tabPane.getSelectionModel().select(1);
@@ -178,124 +172,33 @@ public class SearchController {
             tabPane.getSelectionModel().select(0);
     }
 
-    public void openShoppingListWindow() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/avanceradjavagroup6slutprojekt/shopping-list.fxml"));
-            VBox root = fxmlLoader.load();
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setTitle("Shopping List");
-            stage.setScene(scene);
-            stage.show();
-
-            // loads and displays the current shopping list from firebase database
-            updateShoppingList();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // updates the shopping list
-    private void updateShoppingList() {
-        Platform.runLater(() -> {
-            try {
-                // gets the shopping list from Firebase
-                List<String> shoppingList = firebase.getShoppingList();
-                shoppingListArea.getItems().clear();
-
-                // adds each item from the shopping list to the TextArea
-                for (int i = 0; i < shoppingList.size(); i++) {
-                    String item = shoppingList.get(i);
-                    shoppingListArea.getItems().set(i, item + "\n");
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    @FXML
-    private ListView<String> shoppingListArea; // textarea to display the shopping list
-
-    private Firebase firebase = new Firebase();
-
-    @FXML
-    TextField textfield; // tom - snackade i discord om den
-
-    @FXML
-    public void saveShoppingList() {
-        String shoppingListText = String.valueOf(shoppingListArea.getItems());
-
-        // splits the text into individual items
-        String[] items = shoppingListText.split("\\r?\\n");
-
-        // for each loop to loop each item and save it to firebase
-        for (String item : items) {
-            if (!item.trim().isEmpty()) { // skips empty lines
-                try {
-                    firebase.addItemToShoppingList(item.trim());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        // clears the textarea after saving
-        shoppingListArea.getItems().clear();
-    }
-
     @FXML
     private void addItemToShoppingList() throws IOException {
         String item = itemName.getText();
-        itemName.clear();
-        firebase.addItemToShoppingList(item);
+        slc.addItemToShoppingList(item);
         shoppingListArea.getItems().add(item);
+        itemName.clear();
     }
 
     @FXML
     private void clearShoppingList() {
-        // clears the shopping list textarea
         shoppingListArea.getItems().clear();
     }
 
     @FXML
-    private void closeShoppingListWindow() {
-        // closes the shopping list window
-        Stage stage = (Stage) shoppingListArea.getScene().getWindow();
-        stage.close();
-    }
+    private void readOldShoppingList() throws IOException {
+        shoppingListArea.getItems().clear();
+        List<String> oldShoppingList = slc.readOldShoppingList();
 
-    public void readOldShoppingList(ActionEvent actionEvent) {
-        try {
-            // gets the old shopping list from firebase
-            List<String> oldShoppingList = firebase.getShoppingList();
-            shoppingListArea.getItems().clear();
-
-            // displays the old shopping list in the textarea
-            for (int i = 0; i < oldShoppingList.size(); i++) {
-                String item = oldShoppingList.get(i);
-                shoppingListArea.getItems().add(item);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        // Append each item to ListArea
+        for (String item : oldShoppingList) {
+            shoppingListArea.getItems().add(item);
         }
     }
 
     @FXML
     private void deleteSelectedItem() {
         String selectedText = shoppingListArea.getSelectionModel().getSelectedItem();
-        System.out.println("Selected text: " + selectedText);
-
-        if (selectedText != null && !selectedText.isEmpty()) {
-            // deletes the selected item from firebase
-            try {
-                firebase.deleteItemFromShoppingList(selectedText);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        slc.deleteSelectedItem(selectedText);
     }
 }
-
