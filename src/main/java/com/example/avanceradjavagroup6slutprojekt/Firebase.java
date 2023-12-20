@@ -101,7 +101,7 @@ public class Firebase {
                 return key;
             }
         }
-
+        System.out.println("Key not found");
         return null; // if not found
     }
 

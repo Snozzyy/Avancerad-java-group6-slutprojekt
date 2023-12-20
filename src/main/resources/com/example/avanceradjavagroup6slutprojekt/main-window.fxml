@@ -58,7 +58,7 @@
                   <Button layoutX="57.0" layoutY="569.0" mnemonicParsing="false" onAction="#readOldShoppingList" prefHeight="39.0" prefWidth="89.0" text="Get list" />
                   <Button layoutX="177.0" layoutY="569.0" mnemonicParsing="false" onAction="#clearShoppingList" prefHeight="39.0" prefWidth="89.0" text="Clear list" />
                   <Button layoutX="930.0" layoutY="672.0" mnemonicParsing="false" onAction="#addItemToShoppingList" prefHeight="39.0" prefWidth="89.0" text="Add item" />
-                  <Button layoutX="298.0" layoutY="569.0" mnemonicParsing="false" onAction="#deleteSelectedItem" prefHeight="39.0" prefWidth="89.0" text="Delete list" />
+                  <Button layoutX="298.0" layoutY="569.0" mnemonicParsing="false" onAction="#deleteSelectedItem" prefHeight="39.0" prefWidth="89.0" text="Delete item" />
                   <ListView fx:id="shoppingListArea" layoutX="57.0" layoutY="56.0" prefHeight="497.0" prefWidth="1103.0" />
                </children>
             </AnchorPane>
