@@ -48,7 +48,7 @@ public class Controller {
         }).start();
     }
 
-    private static BufferedReader getBufferedReader(String encodedSearch) throws IOException {
+    private BufferedReader getBufferedReader(String encodedSearch) throws IOException {
         String requestURL = BASE_URL + "?type=public" + encodedSearch + "&app_id=" + API_ID + "&app_key=" + API_KEY;
 
         // creates a URL and opens the connection

@@ -15,70 +15,7 @@ import java.util.List;
 
 public class ShoppingListController {
 
-/*    public void openShoppingListWindow() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/avanceradjavagroup6slutprojekt/shopping-list.fxml"));
-            VBox root = fxmlLoader.load();
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setTitle("Shopping List");
-            stage.setScene(scene);
-            stage.show();
-
-            // loads and displays the current shopping list from firebase database
-            updateShoppingList();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
-    // updates the shopping list
-/*    private void updateShoppingList() {
-        Platform.runLater(() -> {
-            try {
-                // gets the shopping list from Firebase
-                List<String> shoppingList = firebase.getShoppingList();
-                shoppingListArea.clear();
-
-                // adds each item from the shopping list to the TextArea
-                for (String item : shoppingList) {
-                    shoppingListArea.appendText(item + "\n");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-    }*/
-
-    @FXML
-    private TextArea shoppingListArea; // textarea to display the shopping list
-
     private Firebase firebase = new Firebase();
-
-    @FXML
-    TextField textfield; // tom - snackade i discord om den
-
-    @FXML
-    public void saveShoppingList() {
-        String shoppingListText = shoppingListArea.getText();
-
-        // splits the text into individual items
-        String[] items = shoppingListText.split("\\r?\\n");
-
-        // for each loop to loop each item and save it to firebase
-        for (String item : items) {
-            if (!item.trim().isEmpty()) { // skips empty lines
-                try {
-                    firebase.addItemToShoppingList(item.trim());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        // clears the textarea after saving
-        shoppingListArea.clear();
-    }
 
     @FXML
     public void addItemToShoppingList(String item) throws IOException {
